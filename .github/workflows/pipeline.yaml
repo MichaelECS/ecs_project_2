@@ -49,7 +49,7 @@ jobs:
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
       - name: Terraform Init
         id: init
-        run: terraform init ./tf/prod -force-copy
+        run: terraform init -force-copy ./tf/prod
       - name: Terraform Plan
         id: plan
         run: terraform plan ./tf/prod -no-color
