@@ -3,7 +3,7 @@ resource "aws_ecs_cluster" "mike_al_cluster" {
 }
 
 data "template_file" "task_template" {
-  template = file("task-definition.json")
+  template = "${file("./task_definition.json")}"
 
   vars = {
     cw_group = aws_cloudwatch_log_group.mike_al_cw.name
