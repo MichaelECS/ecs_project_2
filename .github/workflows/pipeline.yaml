@@ -49,14 +49,14 @@ jobs:
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
       - name: Terraform Init
         id: init
-        run: terraform init ./tf
+        run: terraform init ../tf/prod
       - name: Terraform Plan
         id: plan
-        run: terraform plan ./tf -no-color
+        run: terraform plan ../tf/prod -no-color
         continue-on-error: true
       - name: Terraform Plan Status
         if: steps.plan.outcome == 'failure'
         run: exit 1
       - name: Terraform Apply
         if: github.ref == 'refs/heads/master' && github.event_name == 'push'
-        run: terraform apply ./tf -auto-approve
+        run: terraform apply ../tf/prod -auto-approve
