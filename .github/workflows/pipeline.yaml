@@ -35,14 +35,14 @@ jobs:
         run: terraform fmt -check
       - name: Terraform Init
         id: init
-        run: terraform init ./tf/dev
+        run: terraform init ./tf
       - name: Terraform Plan
         id: plan
-        run: terraform plan ./tf/dev -no-color
+        run: terraform plan ./tf -no-color
         continue-on-error: true
       - name: Terraform Plan Status
         if: steps.plan.outcome == 'failure'
         run: exit 1
       - name: Terraform Apply
         if: github.ref == 'refs/heads/master' && github.event_name == 'push'
-        run: terraform apply ./tf/dev -auto-approve
+        run: terraform apply ./tf -auto-approve
