@@ -18,8 +18,8 @@ resource "aws_ecs_task_definition" "mike_al_task" {
   requires_compatibilities = [
     "FARGATE"
   ]
-  cpu = 512
-  memory = 1024
+  cpu = var.container_cpu
+  memory = var.container_memory
   network_mode = "awsvpc"
   execution_role_arn = aws_iam_role.mikeAlEcsTaskExecutionRole.arn
 }
@@ -34,7 +34,7 @@ resource "aws_ecs_service" "mike_al_service" {
   load_balancer {
     target_group_arn = aws_lb_target_group.mike_al_alb_tg.arn # Referencing our target group
     container_name   = aws_ecs_task_definition.mike_al_task.family
-    container_port   = 80
+    container_port   = var.http_port
   }
 
   network_configuration {

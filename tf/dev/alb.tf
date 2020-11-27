@@ -30,7 +30,7 @@ resource "aws_security_group" "mike_al_alb_sg" {
 
 resource "aws_lb_target_group" "mike_al_alb_tg" {
   name        = "mike-al-alb-tg"
-  port        = 80
+  port        = var.http_port
   protocol    = "HTTP"
   target_type = "ip"
   vpc_id      = aws_vpc.mike_al_VPC.id
@@ -49,7 +49,7 @@ resource "aws_lb_target_group" "mike_al_alb_tg" {
 
 resource "aws_lb_listener" "mike_al_alb_listener" {
   load_balancer_arn = aws_alb.mike_al_alb.arn
-  port              = "80"
+  port              = var.http_port
   protocol          = "HTTP"
   default_action {
     type             = "forward"
