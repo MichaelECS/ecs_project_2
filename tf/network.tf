@@ -1,43 +1,43 @@
 # create the VPC
-resource "aws_vpc" "mike_al_VPC" {
+resource "aws_vpc" "mike_al_VPC_dev" {
   cidr_block = var.vpcCIDRblock
 
   enable_dns_support   = true
   enable_dns_hostnames = true
 
   tags = {
-    Name = "ma-acad-VPC"
+    Name = "ma-acad-VPC-dev"
   }
 }
 
 # create the Subnet
-resource "aws_subnet" "mike_al_VPC_SubnetOne" {
-  vpc_id                  = aws_vpc.mike_al_VPC.id
+resource "aws_subnet" "mike_al_VPC_SubnetOne_dev" {
+  vpc_id                  = aws_vpc.mike_al_VPC_dev.id
   cidr_block              = var.subnetOneCIDRblock
   map_public_ip_on_launch = var.mapPublicIP
   availability_zone       = var.availabilityZoneOne
 
   tags = {
-    Name = "ma-acad-VPC-subnet"
+    Name = "ma-acad-VPC-subnet-dev"
   }
 }
 
 # create secondary subnet
-resource "aws_subnet" "mike_al_VPC_SubnetTwo" {
-  vpc_id                  = aws_vpc.mike_al_VPC.id
+resource "aws_subnet" "mike_al_VPC_SubnetTwo_dev" {
+  vpc_id                  = aws_vpc.mike_al_VPC_dev.id
   cidr_block              = var.subnetTwoCIDRblock
   map_public_ip_on_launch = var.mapPublicIP
   availability_zone       = var.availabilityZoneTwo
 
   tags = {
-    Name = "ma-acad-VPC-subnet"
+    Name = "ma-acad-VPC-subnet-dev"
   }
 }
 
 # Create the Security Group
-resource "aws_security_group" "mike_al_VPC_Security_Group" {
-  vpc_id      = aws_vpc.mike_al_VPC.id
-  name        = "Mike-Al VPC Security Group"
+resource "aws_security_group" "mike_al_VPC_Security_Group_dev" {
+  vpc_id      = aws_vpc.mike_al_VPC_dev.id
+  name        = "Mike-Al VPC Security Group - dev"
   description = "Mike-Al VPC Security Group"
 
   ingress {
@@ -79,45 +79,45 @@ resource "aws_security_group" "mike_al_VPC_Security_Group" {
   }
 
   tags = {
-    Name        = "Mike-Al VPC Security Group"
+    Name        = "Mike-Al VPC Security Group - dev"
     Description = "Mike-Al VPC Security Group"
   }
 }
 
 # Create the Internet Gateway
-resource "aws_internet_gateway" "mike_al_VPC_GW" {
-  vpc_id = aws_vpc.mike_al_VPC.id
+resource "aws_internet_gateway" "mike_al_VPC_GW_dev" {
+  vpc_id = aws_vpc.mike_al_VPC_dev.id
   tags = {
-    Name = "Mike-Al VPC Internet Gateway"
+    Name = "Mike-Al VPC Internet Gateway - dev"
   }
 }
 
 # Create the Route Table
-resource "aws_route_table" "mike_al_VPC_route_table" {
-  vpc_id = aws_vpc.mike_al_VPC.id
+resource "aws_route_table" "mike_al_VPC_route_table_dev" {
+  vpc_id = aws_vpc.mike_al_VPC_dev.id
 
   tags = {
-    Name = "Mike-Al VPC Route Table"
+    Name = "Mike-Al VPC Route Table - dev"
   }
 }
 
 # Create the Internet Access
-resource "aws_route" "mike_al_VPC_internet_access" {
-  route_table_id         = aws_route_table.mike_al_VPC_route_table.id
+resource "aws_route" "mike_al_VPC_internet_access_dev" {
+  route_table_id         = aws_route_table.mike_al_VPC_route_table_dev.id
   destination_cidr_block = var.destinationCIDRblock
-  gateway_id             = aws_internet_gateway.mike_al_VPC_GW.id
+  gateway_id             = aws_internet_gateway.mike_al_VPC_GW_dev.id
 }
 
 # Associate the Route Table with the Subnet
-resource "aws_route_table_association" "mike_al_VPC_association_one" {
-  subnet_id      = aws_subnet.mike_al_VPC_SubnetOne.id
-  route_table_id = aws_route_table.mike_al_VPC_route_table.id
+resource "aws_route_table_association" "mike_al_VPC_association_one_dev" {
+  subnet_id      = aws_subnet.mike_al_VPC_SubnetOne_dev.id
+  route_table_id = aws_route_table.mike_al_VPC_route_table_dev.id
 }
 
 # Associate the Route Table with the Subnet
-resource "aws_route_table_association" "mike_al_VPC_association_two" {
-  subnet_id      = aws_subnet.mike_al_VPC_SubnetTwo.id
-  route_table_id = aws_route_table.mike_al_VPC_route_table.id
+resource "aws_route_table_association" "mike_al_VPC_association_two_dev" {
+  subnet_id      = aws_subnet.mike_al_VPC_SubnetTwo_dev.id
+  route_table_id = aws_route_table.mike_al_VPC_route_table_dev.id
 }
 
 output "subnet_one_id" {

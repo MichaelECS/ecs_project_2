@@ -47,12 +47,12 @@ resource "aws_lb_target_group" "mike_al_alb_tg" {
   }
 }
 
-resource "aws_lb_listener" "mike_al_alb_listener" {
-  load_balancer_arn = aws_alb.mike_al_alb.arn
+resource "aws_lb_listener" "mike_al_alb_listener_dev" {
+  load_balancer_arn = aws_alb.mike_al_alb_dev.arn
   port              = var.http_port
   protocol          = "HTTP"
   default_action {
     type             = "forward"
-    target_group_arn = aws_lb_target_group.mike_al_alb_tg.arn
+    target_group_arn = aws_lb_target_group.mike_al_alb_tg_dev.arn
   }
 }

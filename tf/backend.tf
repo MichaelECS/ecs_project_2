@@ -4,7 +4,7 @@ terraform {
     hostname = "app.terraform.io"
     organization = "michaelecs"
     workspaces {
-      name = "ecs_project_2"
+      name = "ecs_project_2_dev"
     }
   }
 }
