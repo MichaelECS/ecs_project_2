@@ -13,8 +13,6 @@ junit.xml
 # Directories
 **/.terraform/*
 **/.vagrant/*
-# secret variables
-terraform.tfvars
 .terraformrc
 # SSH Keys
 *.pem
